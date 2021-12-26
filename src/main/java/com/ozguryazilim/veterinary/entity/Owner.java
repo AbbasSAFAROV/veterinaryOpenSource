@@ -7,15 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class Owner {
 
     @Id
@@ -24,8 +23,12 @@ public class Owner {
     private String nameSurname;
     private String contact;
     private String phoneNumber;
+    private String role; // TODO -> enum
     private String email;
+    private String password;
+
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<Pet> pets;
 }
+
