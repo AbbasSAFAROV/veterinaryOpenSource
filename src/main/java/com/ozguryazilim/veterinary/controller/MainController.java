@@ -1,10 +1,14 @@
 package com.ozguryazilim.veterinary.controller;
 
 
+import com.ozguryazilim.veterinary.model.OwnerDto;
+import com.ozguryazilim.veterinary.model.request.OwnerCreateRequest;
 import com.ozguryazilim.veterinary.service.OwnerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -17,7 +21,7 @@ public class MainController {
         this.ownerService = ownerService;
     }
 
-    @GetMapping("/hello")
+    @GetMapping()
     public String getAllOwners(Model model){
         model.addAttribute("owners",ownerService.getAllOwner());
         return "owner";
@@ -29,10 +33,24 @@ public class MainController {
         return "login";
     }
 
+    @ModelAttribute("user")
+    public OwnerCreateRequest ownerCreateRequest(){
+        return new OwnerCreateRequest();
+    }
+
     @GetMapping("/register")
     public String getRegisterPage(Model model){
-        model.addAttribute("ownerLogin",ownerService.getAllOwner());
         return "register";
     }
+
+    @PostMapping("/register")
+    public String registerOwnerAccount(@ModelAttribute("user") OwnerCreateRequest ownerCreateRequest){
+        ownerService.createOwner(ownerCreateRequest);
+        return "redirect:/owner/register?success";
+    }
+
+
+
+
 
 }

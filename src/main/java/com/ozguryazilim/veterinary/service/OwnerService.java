@@ -8,20 +8,26 @@ import com.ozguryazilim.veterinary.model.OwnerDto;
 import com.ozguryazilim.veterinary.model.request.OwnerCreateRequest;
 import com.ozguryazilim.veterinary.repository.OwnerRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class OwnerService {
+public class OwnerService implements UserService{
 
     private final OwnerRepository ownerRepository;
     private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public OwnerService(OwnerRepository ownerRepository, ModelMapper modelMapper) {
+    public OwnerService(OwnerRepository ownerRepository, ModelMapper modelMapper, BCryptPasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
         this.ownerRepository = ownerRepository;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<OwnerDto> getAllOwner(){
@@ -40,7 +46,8 @@ public class OwnerService {
         return modelMapper.map(ownerRepository.save(modelMapper.map(owner,Owner.class)),OwnerDto.class);
     }
 
-    public OwnerDto updateOwnerById(OwnerCreateRequest owner,Long id){
+
+    public OwnerDto updateOwnerById(OwnerCreateRequest owner, Long id){
         Owner existingOwner = findOwnerById(id);
         existingOwner.setNameSurname(owner.getNameSurname());
         return modelMapper.map(ownerRepository.save(existingOwner),OwnerDto.class);
@@ -67,4 +74,13 @@ public class OwnerService {
         return ownerRepository.findById(id).orElseThrow(()->new OwnerNotFoundException("Owner Not Found With This Id: "+id));
     }
 
+    @Override
+    public Owner save(OwnerCreateRequest ownerCreateRequest) {
+        return null;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
+    }
 }
