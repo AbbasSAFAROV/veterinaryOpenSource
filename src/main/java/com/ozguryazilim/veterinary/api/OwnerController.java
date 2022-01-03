@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/owners")
+@RequestMapping("/user")
 public class OwnerController {
 
     private final OwnerService ownerService;
@@ -29,6 +29,10 @@ public class OwnerController {
     @GetMapping("/{id}")
     public ResponseEntity<OwnerDto> getOwnerById(@PathVariable Long id){
         return new ResponseEntity<>(ownerService.getOwnerById(id),HttpStatus.OK);//200
+    }
+    @GetMapping("/search")
+    public ResponseEntity<OwnerDto> getOwnerByName(@RequestParam String name){
+        return new ResponseEntity<>(ownerService.findByName(name),HttpStatus.OK);//200
     }
 
     @PostMapping

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Pet {
@@ -26,4 +25,12 @@ public class Pet {
     @ManyToOne(fetch = FetchType.LAZY)
     private Owner owner;
 
+    public Pet(String name, String description, Integer age, String type, String genus, Owner owner) {
+        this.name = name;
+        this.description = description;
+        this.age = age;
+        this.type = type;
+        this.genus = genus;
+        this.owner = owner;
+    }
 }

@@ -2,6 +2,7 @@ package com.ozguryazilim.veterinary.service;
 
 
 import com.ozguryazilim.veterinary.entity.Owner;
+import com.ozguryazilim.veterinary.entity.Pet;
 import com.ozguryazilim.veterinary.exception.OwnerNotFoundException;
 import com.ozguryazilim.veterinary.model.OwnerDto;
 import com.ozguryazilim.veterinary.model.request.OwnerCreateRequest;
@@ -49,6 +50,17 @@ public class OwnerService {
         Owner owner = findOwnerById(id);
         ownerRepository.delete(owner);
         return "owner deleted id:"+id;
+    }
+
+    public String registerPet(Owner owner,List<Pet> pet){
+
+        Owner owner1 = ownerRepository.findById(owner.getId()).get();
+        owner1.setPets(pet);
+        return "pet added!";
+    }
+
+    public OwnerDto findByName(String name){
+        return modelMapper.map(ownerRepository.findByNameSurname(name),OwnerDto.class);
     }
 
     public Owner findOwnerById(Long id){

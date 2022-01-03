@@ -23,17 +23,13 @@ public class Owner {
     private String nameSurname;
     private String contact;
     private String phoneNumber;
+    @Builder.Default
+    private UserRole userRole=UserRole.USER_ROLE;
     private String email;
     private String password;
 
-
     @OneToMany(fetch = FetchType.LAZY)
     private List<Pet> pets;
-
-    enum role {
-        STANDART,
-        ADMIN
-    }
 
 }
 

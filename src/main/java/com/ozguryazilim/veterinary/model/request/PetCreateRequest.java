@@ -15,5 +15,6 @@ public class PetCreateRequest {
     private Integer age;
     private String type;
     private String genus;
+    private Long ownerId;
 
 }
