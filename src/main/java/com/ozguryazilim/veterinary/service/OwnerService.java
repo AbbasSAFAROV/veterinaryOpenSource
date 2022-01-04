@@ -94,6 +94,18 @@ public class OwnerService implements UserService{
         }
         return new loginService(owner);
     }
+
+    public Owner activateAdmin(Long id){
+        Owner owner = findOwnerById(id);
+        owner.setUserRole(UserRole.ADMIN_ROLE);
+        return ownerRepository.save(owner);
+    }
+    public Owner deActivateAdmin(Long id){
+        Owner owner = findOwnerById(id);
+        owner.setUserRole(UserRole.USER_ROLE);
+        return ownerRepository.save(owner);
+    }
+
     /**
     private Collection<? extends GrantedAuthority> mapRoles(Collection<UserRole> roles){
         return roles.stream().map(role->new SimpleGrantedAuthority(role.name())).collect(Collectors.toList());

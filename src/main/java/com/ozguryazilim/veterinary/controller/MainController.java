@@ -2,14 +2,13 @@ package com.ozguryazilim.veterinary.controller;
 
 
 import com.ozguryazilim.veterinary.entity.Owner;
-import com.ozguryazilim.veterinary.model.request.OwnerCreateRequest;
 import com.ozguryazilim.veterinary.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/owner")
+@RequestMapping({"/owner","/"})
 public class MainController {
 
     private final UserService ownerService;
@@ -48,13 +47,13 @@ public class MainController {
     @PostMapping("/save")
     public String saveOwnerAccount(@ModelAttribute("user") Owner owner){
         ownerService.save(owner);
-        return "redirect:/owner/register?success";
+        return "redirect:/register?success";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteOwnerById(@PathVariable("id") Long id, Model model){
-        model.addAttribute("id",id);
-        return "update";
+    public String deleteOwnerById(@PathVariable("id") Long id){
+        ownerService.deleteOwnerById(id);
+        return "redirect:/owner";
     }
 
     @GetMapping("/update/{id}")
@@ -63,7 +62,11 @@ public class MainController {
         return "update";
     }
 
-
+    @GetMapping("/activate/admin/{id}")
+    public String getActivateAdmin(@PathVariable("id") Long id){
+        ownerService.activateAdmin(id);
+        return "redirect:/owner";
+    }
 
 
     /**
