@@ -2,18 +2,22 @@ package com.ozguryazilim.veterinary.service;
 
 
 import com.ozguryazilim.veterinary.entity.Owner;
-import com.ozguryazilim.veterinary.entity.Pet;
+import com.ozguryazilim.veterinary.entity.UserRole;
 import com.ozguryazilim.veterinary.exception.OwnerNotFoundException;
 import com.ozguryazilim.veterinary.model.OwnerDto;
 import com.ozguryazilim.veterinary.model.request.OwnerCreateRequest;
 import com.ozguryazilim.veterinary.repository.OwnerRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,9 +26,12 @@ public class OwnerService implements UserService{
 
     private final OwnerRepository ownerRepository;
     private final ModelMapper modelMapper;
-    private final BCryptPasswordEncoder passwordEncoder;
 
-    public OwnerService(OwnerRepository ownerRepository, ModelMapper modelMapper, BCryptPasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    public OwnerService(OwnerRepository ownerRepository, ModelMapper modelMapper, BCryptPasswordEncoder passwordEncoder) {
+        super();
         this.ownerRepository = ownerRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -59,15 +66,12 @@ public class OwnerService implements UserService{
         return "owner deleted id:"+id;
     }
 
-    public String registerPet(Owner owner,List<Pet> pet){
-
-        Owner owner1 = ownerRepository.findById(owner.getId()).get();
-        owner1.setPets(pet);
-        return "pet added!";
-    }
-
     public OwnerDto findByName(String name){
         return modelMapper.map(ownerRepository.findByNameSurname(name),OwnerDto.class);
+    }
+
+    public Owner getOwnerByEmail(String email){
+        return ownerRepository.findByEmail(email);
     }
 
     public Owner findOwnerById(Long id){
@@ -75,12 +79,22 @@ public class OwnerService implements UserService{
     }
 
     @Override
-    public Owner save(OwnerCreateRequest ownerCreateRequest) {
-        return null;
+    public Owner save(OwnerCreateRequest request) {
+        Owner owner = new Owner(request.getNameSurname(),request.getContact(),request.getEmail(),request.getPhoneNumber(),passwordEncoder.encode(request.getPassword()));
+        return ownerRepository.save(owner);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Owner owner = ownerRepository.findByEmail(email);
+        Collection<UserRole> roles = Collections.singleton(owner.getUserRole());
+        if (owner == null) {
+            throw new UsernameNotFoundException("Invalid Username or password");
+        }
+        return new loginService(owner);
+    }
+
+    private Collection<? extends GrantedAuthority> mapRoles(Collection<UserRole> roles){
+        return roles.stream().map(role->new SimpleGrantedAuthority(role.name())).collect(Collectors.toList());
     }
 }

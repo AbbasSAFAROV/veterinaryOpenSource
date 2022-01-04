@@ -1,10 +1,9 @@
 package com.ozguryazilim.veterinary.api;
 
 
-import com.ozguryazilim.veterinary.entity.Owner;
 import com.ozguryazilim.veterinary.model.OwnerDto;
 import com.ozguryazilim.veterinary.model.request.OwnerCreateRequest;
-import com.ozguryazilim.veterinary.service.OwnerService;
+import com.ozguryazilim.veterinary.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +14,12 @@ import java.util.List;
 @RequestMapping("/user")
 public class OwnerController {
 
-    private final OwnerService ownerService;
+    private final UserService ownerService;
 
-    public OwnerController(OwnerService ownerService) {
-        this.ownerService = ownerService;
+    public OwnerController(UserService userService) {
+        this.ownerService = userService;
     }
+
 
     @GetMapping
     public ResponseEntity<List<OwnerDto>> getAllOwners(){

@@ -41,7 +41,7 @@
                     This is a success alert—check it out!
                 </div>
             </div>
-            <form th:action="@{/owner/register}" method="post" th:object="${user}">
+            <form th:action="@{/owner/save}" method="post" th:object="${user}">
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Name Surname</label>
                     <input class="form-control" type="text" th:field="*{nameSurname}" placeholder="Name and surname">

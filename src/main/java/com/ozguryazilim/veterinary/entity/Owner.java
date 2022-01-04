@@ -31,5 +31,12 @@ public class Owner {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Pet> pets;
 
+    public Owner(String nameSurname, String contact, String phoneNumber, String email, String password) {
+        this.nameSurname = nameSurname;
+        this.contact = contact;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.password = password;
+    }
 }
 
