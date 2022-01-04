@@ -13,6 +13,7 @@ public class OwnerCreateRequest {
     private String contact;
     private String phoneNumber;
     private String email;
+    private String username;
     private String password;
 
 }

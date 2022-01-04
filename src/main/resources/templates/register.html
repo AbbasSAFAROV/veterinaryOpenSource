@@ -1,40 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <div th:replace="header::myHeader"></div>
 </head>
 <body>
 
-    <div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Veterinary</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav left">
-                    <li class="nav-item active">
-                        <a class="nav-link" th:href="@{owner}">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav right">
-                    <li class="nav-item active">
-                        <a class="nav-link" th:href="@{owner}">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+    <div th:replace="navbar::navbar"></div>
+    <div style="margin-top: 30px">
+        <h1 style="text-align: center">Register Page</h1>
     </div>
-
     <div class="container" style="margin-top: 20px;">
             <div th:if="${param.success}">
                 <div class="alert alert-success" role="alert">
@@ -43,20 +17,24 @@
             </div>
             <form th:action="@{/owner/save}" method="post" th:object="${user}">
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Name Surname</label>
-                    <input class="form-control" type="text" th:field="*{nameSurname}" placeholder="Name and surname">
+                    <label for="nameSurname">Name Surname</label>
+                    <input class="form-control" type="text" th:field="*{nameSurname}" id="nameSurname" placeholder="Name and surname">
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Phone Number</label>
-                    <input class="form-control" type="tel" th:field="*{phoneNumber}" placeholder="Phone number">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input class="form-control" type="tel" th:field="*{phoneNumber}" id="phoneNumber" placeholder="Phone number">
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Contact</label>
-                    <input class="form-control" type="text" th:field="*{contact}" placeholder="Adress street vs ..">
+                    <label for="contact">Contact</label>
+                    <input class="form-control" type="text" th:field="*{contact}" id="contact" placeholder="Adress street vs ..">
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Email address</label>
-                    <input type="email" class="form-control" th:field="*{email}" id="exampleFormControlInput1" placeholder="name@example.com">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="username">Email address</label>
+                    <input type="text" class="form-control" th:field="*{username}" id="username" placeholder="name@example.com">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>

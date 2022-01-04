@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserService extends UserDetailsService {
 
-    Owner save(OwnerCreateRequest ownerCreateRequest);
+    Owner save(Owner owner);
     List<OwnerDto> getAllOwner();
     OwnerDto getOwnerById(Long id);
     OwnerDto createOwner(OwnerCreateRequest owner);

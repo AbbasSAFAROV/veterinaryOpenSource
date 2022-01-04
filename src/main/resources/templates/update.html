@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" th:href="@{/owner}">Veterinary</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav left">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/owner}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/owner}">Link</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav right">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/owner}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/owner}">Link</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+
+<div class="container" style="margin-top: 20px;">
+    <div class="alert alert-success" role="alert">
+        Update Page
+    </div>
+    <div th:if="${param.success}">
+        <div class="alert alert-success" role="alert">
+            This is a success alert—check it out!
+        </div>
+    </div>
+    <div th:if="${id}">
+        <div class="alert alert-success" role="alert">
+            <h th:text="${id}"></h>
+        </div>
+    </div>
+    <form th:action="@{/owner/save}" method="post" th:object="${user}">
+        <div class="form-group">
+            <label for="nameSurname">Name Surname</label>
+            <input class="form-control" type="text" th:field="*{nameSurname}" id="nameSurname" placeholder="Name and surname">
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input class="form-control" type="tel" th:field="*{phoneNumber}" id="phoneNumber" placeholder="Phone number">
+        </div>
+        <div class="form-group">
+            <label for="contact">Contact</label>
+            <input class="form-control" type="text" th:field="*{contact}" id="contact" placeholder="Adress street vs ..">
+        </div>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="name@example.com">
+        </div>
+        <div class="form-group">
+            <label for="username">Email address</label>
+            <input type="text" class="form-control" th:field="*{username}" id="username" placeholder="name@example.com">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" th:field="*{password}" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Role</label>
+            <select class="form-control" id="exampleFormControlSelect1">
+                <option>Standart</option>
+                <option>Admin</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+
+
+    </form>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

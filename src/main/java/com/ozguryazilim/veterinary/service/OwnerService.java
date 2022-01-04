@@ -79,22 +79,24 @@ public class OwnerService implements UserService{
     }
 
     @Override
-    public Owner save(OwnerCreateRequest request) {
-        Owner owner = new Owner(request.getNameSurname(),request.getContact(),request.getEmail(),request.getPhoneNumber(),passwordEncoder.encode(request.getPassword()));
-        return ownerRepository.save(owner);
+    public Owner save(Owner request) {
+        request.setPassword(passwordEncoder.encode(request.getPassword()));
+        //Owner owner = new Owner(request.getNameSurname(),request.getContact(),request.getUsername(),request.getEmail(),request.getPhoneNumber(),passwordEncoder.encode(request.getPassword()));
+        return ownerRepository.save(request);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Owner owner = ownerRepository.findByEmail(email);
-        Collection<UserRole> roles = Collections.singleton(owner.getUserRole());
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Owner owner = ownerRepository.findByUsername(username);
+        //Collection<UserRole> roles = Collections.singleton(owner.getUserRole());
         if (owner == null) {
-            throw new UsernameNotFoundException("Invalid Username or password");
+            throw new UsernameNotFoundException("Invalid Username or password 01");
         }
         return new loginService(owner);
     }
-
+    /**
     private Collection<? extends GrantedAuthority> mapRoles(Collection<UserRole> roles){
         return roles.stream().map(role->new SimpleGrantedAuthority(role.name())).collect(Collectors.toList());
     }
+     **/
 }
