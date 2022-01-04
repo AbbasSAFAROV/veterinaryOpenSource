@@ -11,14 +11,8 @@
       <div class="navbar-nav">
         <a th:href="@{/owner}" class="nav-item nav-link">Home</a>
         <a th:href="@{/owner}" class="nav-item nav-link">About</a>
-        <div class="nav-item dropdown">
-          <a th:href="@{/owner/index}" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">Dashboard</a>
-          <div class="dropdown-menu">
-            <a href="#" class="dropdown-item">Web Design</a>
-            <a href="#" class="dropdown-item">Web Development</a>
-            <a href="#" class="dropdown-item">Graphic Design</a>
-            <a href="#" class="dropdown-item">Digital Marketing</a>
-          </div>
+        <div class="nav-item">
+          <a th:href="@{/owner/index}" class="nav-item nav-link">Dashboard</a>
         </div>
         <a th:href="@{/owner/save}" class="nav-item nav-link active">Register</a>
         <a th:href="@{/owner/login}" class="nav-item nav-link">Login</a>
@@ -28,7 +22,7 @@
 
       <form class="navbar-form form-inline">
         <div class="input-group search-box">
-          <input type="text" id="search" class="form-control" placeholder="Search here...">
+          <input type="text" name="search" id="search" class="form-control" placeholder="Search here...">
           <div class="input-group-append">
 					<span class="input-group-text">
 						<i class="material-icons">&#xE8B6;</i>
