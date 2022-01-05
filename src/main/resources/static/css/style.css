@@ -183,3 +183,11 @@ body {
         width: 100%;
     }
 }
+
+.responsive {
+    background: url('https://s20.postimg.org/o09gf7fvx/bag.jpg') no-repeat center top;
+    border: 1px solid red;
+    background-size: contain;
+    width: 100%;
+    height: 270px;
+}
