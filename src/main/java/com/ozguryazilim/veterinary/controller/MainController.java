@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping({"/owner","/"})
+@RequestMapping("/owner")
 public class MainController {
 
     private final UserService ownerService;
@@ -23,15 +23,14 @@ public class MainController {
         return "owner";
     }
 
-    @GetMapping("/index")
-    public String getIndex(){
-        return "index";
+    @GetMapping("/login")
+    public String getLoginPage(){
+        return "redirect:/owner";
     }
 
-    @GetMapping("/login")
-    public String getLoginPage(Model model){
-        model.addAttribute("ownerLogin",ownerService.getAllOwner());
-        return "login";
+    @GetMapping("/logout")
+    public String logout(){
+        return "redirect:/owner";
     }
 
     @ModelAttribute("user")
@@ -47,7 +46,8 @@ public class MainController {
     @PostMapping("/save")
     public String saveOwnerAccount(@ModelAttribute("user") Owner owner){
         ownerService.save(owner);
-        return "redirect:/register?success";
+        String redirect = "redirect:/owner/register?success";
+        return "redirect:/owner";
     }
 
     @GetMapping("/delete/{id}")
@@ -68,17 +68,4 @@ public class MainController {
         return "redirect:/owner";
     }
 
-
-    /**
-    @GetMapping("/register")
-    public String getRegisterPage(Model model){
-        return "register";
-    }
-
-    @PostMapping("/register")
-    public String registerOwnerAccount(@ModelAttribute("user") OwnerCreateRequest ownerCreateRequest){
-        ownerService.createOwner(ownerCreateRequest);
-        return "redirect:/owner/register?success";
-    }
-    **/
 }

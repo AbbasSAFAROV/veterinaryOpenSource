@@ -33,7 +33,7 @@
                     <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="name@example.com">
                 </div>
                 <div class="form-group">
-                    <label for="username">Email address</label>
+                    <label for="username">Username</label>
                     <input type="text" class="form-control" th:field="*{username}" id="username" placeholder="name@example.com">
                 </div>
                 <div class="form-group">
@@ -43,8 +43,8 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Role</label>
                     <select class="form-control" id="exampleFormControlSelect1">
-                        <option>Standart</option>
-                        <option>Admin</option>
+                        <option th:text="*{userRole.USER_ROLE}"></option>
+                        <option th:text="*{userRole.ADMIN_ROLE}"></option>
                     </select>
                 </div>
                 <div class="form-group">
