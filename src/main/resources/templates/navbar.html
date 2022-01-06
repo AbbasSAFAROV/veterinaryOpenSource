@@ -17,19 +17,19 @@
         </div>
         <a th:href="@{/owner/save}" class="nav-item nav-link active">Register</a>
         <a th:href="@{/owner/login}" class="nav-item nav-link">Login</a>
-        <a th:href="@{/owner/logout}" class="nav-item nav-link">Logout</a>
-        <a th:href="@{/owner/index}" class="nav-item nav-link">Contact</a>
+        <a th:href="@{/index}" class="nav-item nav-link">Contact</a>
       </div>
 
 
-      <form class="navbar-form form-inline">
+      <form class="navbar-form form-inline" th:action="@{/owner/search}" method="get">
         <div class="input-group search-box">
-          <input type="text" name="search" id="search" class="form-control" placeholder="Search here...">
+          <input type="text" name="search" id="search" th:value="${search}" class="form-control" placeholder="Search here...">
           <div class="input-group-append">
 					<span class="input-group-text">
-						<i class="material-icons">&#xE8B6;</i>
+						<a type="submit"><i class="material-icons">&#xE8B6;</i></a>
 					</span>
           </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </form>
 

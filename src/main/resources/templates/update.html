@@ -22,7 +22,7 @@
                 <h th:text="${id}"></h>
             </div>
         </div>
-        <form th:action="@{/owner/update}" method="post" th:object="${user}">
+        <form th:action="@{/owner/edit/{id}(id=${user.getId()})}" method="post" th:object="${user}">
             <div class="form-group">
                 <label for="nameSurname">Name Surname</label>
                 <input class="form-control" type="text" name="nameSurname" th:value="*{nameSurname}" id="nameSurname" placeholder="nameSurname">
