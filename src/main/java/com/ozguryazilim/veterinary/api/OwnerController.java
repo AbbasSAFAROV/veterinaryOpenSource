@@ -1,6 +1,7 @@
 package com.ozguryazilim.veterinary.api;
 
 
+import com.ozguryazilim.veterinary.entity.Owner;
 import com.ozguryazilim.veterinary.model.OwnerDto;
 import com.ozguryazilim.veterinary.model.request.OwnerCreateRequest;
 import com.ozguryazilim.veterinary.service.UserService;
@@ -41,7 +42,7 @@ public class OwnerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OwnerDto> updateOwner(@RequestBody OwnerCreateRequest owner,@PathVariable Long id){
+    public ResponseEntity<OwnerDto> updateOwner(@RequestBody Owner owner, @PathVariable Long id){
         return new ResponseEntity<>(ownerService.updateOwnerById(owner,id),HttpStatus.OK); // 200
     }
 

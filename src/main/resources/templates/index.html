@@ -1,9 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
   <div th:replace="header::myHeader"></div>
 </head>
 <body>
-<div th:replace="navbar::navbar"></div>
+  <div th:replace="navbar::navbar"></div>
+
+  <h1>Hi From Index</h1>
+  <div>
+    <p>Welcome</p>
+      <span sec:authentication="principal.username">User</span>
+  </div>
+
+
 </body>
 </html>

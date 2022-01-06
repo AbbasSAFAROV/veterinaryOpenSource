@@ -9,15 +9,11 @@ import com.ozguryazilim.veterinary.model.request.OwnerCreateRequest;
 import com.ozguryazilim.veterinary.repository.OwnerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,7 +50,7 @@ public class OwnerService implements UserService{
     }
 
 
-    public OwnerDto updateOwnerById(OwnerCreateRequest owner, Long id){
+    public OwnerDto updateOwnerById(Owner owner, Long id){
         Owner existingOwner = findOwnerById(id);
         existingOwner.setNameSurname(owner.getNameSurname());
         return modelMapper.map(ownerRepository.save(existingOwner),OwnerDto.class);
@@ -100,6 +96,14 @@ public class OwnerService implements UserService{
         owner.setUserRole(UserRole.ADMIN_ROLE);
         return ownerRepository.save(owner);
     }
+
+    @Override
+    public Owner updateOwner(Owner owner) {
+        Owner owner1 = ownerRepository.findById(owner.getId()).orElseThrow(()->new OwnerNotFoundException("Owner Not Found With This Id: "+owner.getId()));
+        owner1.setNameSurname(owner.getNameSurname());
+        return ownerRepository.save(owner1);
+    }
+
     public Owner deActivateAdmin(Long id){
         Owner owner = findOwnerById(id);
         owner.setUserRole(UserRole.USER_ROLE);

@@ -1,6 +1,7 @@
 package com.ozguryazilim.veterinary.config;
 
 import com.ozguryazilim.veterinary.entity.Owner;
+import com.ozguryazilim.veterinary.entity.UserRole;
 import com.ozguryazilim.veterinary.repository.OwnerRepository;
 import com.ozguryazilim.veterinary.service.OwnerService;
 import org.springframework.boot.CommandLineRunner;
@@ -23,6 +24,8 @@ public class DataLoader implements CommandLineRunner {
 
         Owner owner = new Owner("abbas","izmir","+905459149870","abbas@gmail.com","abbas","123456");
         Owner owner2 = new Owner("admin","izmir","+905459149870","admin@gmail.com","admin","123456");
+        owner.setUserRole(UserRole.USER_ROLE);
+        owner2.setUserRole(UserRole.USER_ROLE);
 
         service.save(owner);
         service.save(owner2);

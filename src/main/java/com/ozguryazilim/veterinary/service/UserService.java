@@ -13,9 +13,10 @@ public interface UserService extends UserDetailsService {
     List<OwnerDto> getAllOwner();
     OwnerDto getOwnerById(Long id);
     OwnerDto createOwner(OwnerCreateRequest owner);
-    OwnerDto updateOwnerById(OwnerCreateRequest owner, Long id);
+    OwnerDto updateOwnerById(Owner owner, Long id);
     String deleteOwnerById(Long id);
     OwnerDto findByName(String name);
     Owner activateAdmin(Long id);
 
+    Owner updateOwner(Owner owner);
 }
