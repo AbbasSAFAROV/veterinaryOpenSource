@@ -6,6 +6,7 @@ node {
     stage('Build'){
         app = docker.build("abbas1997/veterinaryapp")
     }
+
     stage('Build'){
          app.inside{
             sh 'mvn clean test'
