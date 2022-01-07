@@ -2,7 +2,6 @@ package com.ozguryazilim.veterinary.controller;
 
 
 import com.ozguryazilim.veterinary.entity.Owner;
-import com.ozguryazilim.veterinary.model.OwnerDto;
 import com.ozguryazilim.veterinary.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
