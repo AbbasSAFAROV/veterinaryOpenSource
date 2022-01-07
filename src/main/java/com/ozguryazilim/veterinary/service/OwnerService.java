@@ -53,6 +53,10 @@ public class OwnerService implements UserService{
     public OwnerDto updateOwnerById(Owner owner, Long id){
         Owner existingOwner = findOwnerById(id);
         existingOwner.setNameSurname(owner.getNameSurname());
+        existingOwner.setContact(owner.getContact());
+        existingOwner.setEmail(owner.getEmail());
+        existingOwner.setPassword(owner.getPassword());
+        existingOwner.setPhoneNumber(owner.getPhoneNumber());
         return modelMapper.map(ownerRepository.save(existingOwner),OwnerDto.class);
     }
 
@@ -63,7 +67,7 @@ public class OwnerService implements UserService{
     }
 
     public OwnerDto findByName(String name){
-        return modelMapper.map(ownerRepository.findByNameSurname(name),OwnerDto.class);
+        return modelMapper.map(ownerRepository.findByNameSurnameContaining(name),OwnerDto.class);
     }
 
     public Owner getOwnerByEmail(String email){

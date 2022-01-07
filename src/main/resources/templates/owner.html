@@ -10,13 +10,14 @@
     <div style="margin-top: 30px">
         <h1 style="text-align: center">Owners List</h1>
     </div>
-    <div th:if="${param.success}">
-        <div class="alert alert-success" role="alert">
-            This is a success alert—check it out!
-        </div>
-    </div>
+
 
     <div class="container">
+        <div th:if="${param.success}">
+            <div class="alert alert-success" role="alert">
+                This is a success alert—check it out!
+            </div>
+        </div>
         <div class="row">
             <table class="table">
                 <thead class="thead-light">
