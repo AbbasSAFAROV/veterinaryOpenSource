@@ -28,7 +28,7 @@ pipeline {
 }
 
 
-/****
+/**
 pipeline {
     agent any
 
@@ -50,3 +50,4 @@ pipeline {
         }
     }
 }
+**/
