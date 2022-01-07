@@ -1,30 +1,30 @@
-pipeline{
-    agent{
-        docker{
+pipeline {
+    agent {
+        docker {
             image 'maven:3.8.1-adoptopenjdk-11'
             args '-v /root/.m2:/root/.m2'
         }
     }
-    options{
+    options {
         skipStagesAfterUnstable()
     }
-    stages{
+    stages {
         stage('Clone repository'){
-            steps{
+            steps {
                 checkout scm
             }
         }
         stage('Build'){
-            steps{
+            steps {
                 sh 'mvn -B DskipTests clean package'
             }
         }
         stage('Test image'){
-            steps{
+            steps {
                 sh 'mvn test'
             }
-            post{
-                always{
+            post {
+                always {
                     junit 'target/surefire-reports/*.xml'
                 }
             }
