@@ -1,3 +1,31 @@
+node {
+    def app
+    stage('Clone repository'){
+        checkout scm
+    }
+    stage('Build'){
+        app = docker.build("abbas1997/veterinaryapp")
+    }
+    stage('Build'){
+         app.inside{
+            sh 'mvn clean test'
+         }
+    }
+
+    stage('Build'){
+        docker.withRegistry('','dockerhub'){
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
+        }
+    }
+
+
+}
+
+
+
+
+/**
 pipeline {
     agent any
     options {
@@ -18,7 +46,6 @@ pipeline {
     }
 }
 
-/**
 pipeline {
     agent any
 
