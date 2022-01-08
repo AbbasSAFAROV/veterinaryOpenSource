@@ -12,7 +12,7 @@ public class PetCreateRequest {
 
     private String name;
     private String description;
-    private Integer age;
+    private String age;
     private String type;
     private String genus;
     private Long ownerId;

@@ -6,55 +6,107 @@
 <body>
 
     <div th:replace="navbar::navbar"></div>
-
     <div style="margin-top: 30px">
-        <h1 style="text-align: center">Owners List</h1>
+        <h1 style="text-align: center"></h1>
     </div>
-
 
     <div class="container">
-        <div th:if="${param.success}">
-            <div class="alert alert-success" role="alert">
-                This is a success alert—check it out!
-            </div>
-        </div>
         <div class="row">
-            <table class="table">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Delete</th>
-                    <th scope="col">Update</th>
-                    <th scope="col">Activate Admin</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="owner:${owners}">
-                    <td th:text="${owner.getId()}"></td>
-                    <td th:text="${owner.getNameSurname()}"></td>
-                    <td th:text="${owner.getEmail()}"></td>
-                    <td th:text="${owner.getUsername()}"></td>
-                    <td th:text="${owner.getPhoneNumber()}"></td>
-                    <td th:text="${owner.getUserRole()}"></td>
-                    <td>
-                        <a class="btn btn-danger" th:href="@{'/owner/delete/'+${owner.getId()}}">Delete</a>
-                    </td>
-                    <td>
-                        <a class="btn btn-warning" th:href="@{/owner/update/{id}(id=${owner.getId()})}">Update</a>
-                    </td>
-                    <td>
-                        <a class="btn btn-primary" th:href="@{/owner/activate/admin/{id}(id=${owner.getId()})}">Activate</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <!-- start col-4 -->
+            <div class="col-4" style="margin-top: 30px;">
+                <div>
+                    <h1 style="text-align: center">Profile Details</h1>
+                </div>
+                <form th:action="@{/pet/add/{id}(id=${user.getId()})}" method="get" th:object="${user}">
+                    <div class="form-group">
+                        <label for="nameSurname">Name Surname</label>
+                        <input class="form-control" type="text" name="nameSurname" th:value="*{nameSurname}" id="nameSurname" placeholder="nameSurname">
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input class="form-control" type="tel" name="phoneNumber" th:value="*{phoneNumber}" id="phoneNumber" placeholder="phoneNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Contact</label>
+                        <input class="form-control" type="text" name="contact" th:value="*{contact}" id="contact" placeholder="contact">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" name="email" th:value="*{email}" id="email" placeholder="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" name="username" th:value="*{username}" id="username" placeholder="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" name="password" th:value="*{password}" id="exampleInputPassword1" placeholder="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Role</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>Standart</option>
+                            <option>Admin</option>
+                        </select>
+                    </div>
+                </form>
+
+            </div>
+            <!-- end col-4 -->
+            <!-- start col-4 -->
+
+            <div class="col-1"></div>
+
+            <!-- end col-8 -->
+            <!-- start col-8 -->
+            <div class="col-7">
+
+                <div th:if="${param.success}">
+                    <div class="alert alert-success" role="alert">
+                        This is a success alert—check it out!
+                    </div>
+                </div>
+                <div style="margin-top: 30px;margin-bottom: 20px;">
+                    <a class="btn btn-success" th:href="@{/pet/add/{id}(id=${user.getId()})}">Add a pet</a>
+                </div>
+
+                <div class="row">
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Genus</th>
+                            <th scope="col">Delete</th>
+                            <th scope="col">Update</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="pet:${pets}">
+                            <td th:text="${pet.getId()}"></td>
+                            <td th:text="${pet.getName()}"></td>
+                            <td th:text="${pet.getDescription()}"></td>
+                            <td th:text="${pet.getGenus()}"></td>
+                            <td th:text="${pet.getType()}"></td>
+                            <td th:text="${pet.getAge()}"></td>
+                            <td>
+                                <a class="btn btn-danger" th:href="@{'/owner/delete/'+${owner.getId()}}">Delete</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-warning" th:href="@{/owner/update/{id}(id=${owner.getId()})}">Update</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <!-- end col-8 -->
         </div>
     </div>
+
 
     <div th:replace="footer::footer"></div>
 

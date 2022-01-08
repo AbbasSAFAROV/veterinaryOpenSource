@@ -31,6 +31,16 @@ public class PetService {
         return petRepository.findAll().stream().map(x->modelMapper.map(x,PetDto.class)).collect(Collectors.toList());
     }
 
+    public List<PetDto> getPetsByOwnerId(Long id){
+        Owner owner = service.findOwnerById(id);
+        List<PetDto> petList = owner
+                .getPets()
+                .stream()
+                .map(x->modelMapper.map(x,PetDto.class))
+                .collect(Collectors.toList());
+        return petList;
+    }
+
     public PetDto getPetById(Long id){
         return modelMapper.map(findById(id),PetDto.class);
     }
@@ -38,6 +48,7 @@ public class PetService {
     public PetDto createPet(PetCreateRequest pet){
         Owner owner = service.findOwnerById(pet.getOwnerId());
         Pet newPet= new Pet(pet.getName(),pet.getDescription(),pet.getAge(),pet.getType(),pet.getGenus(),owner);
+        //modelMapper.map(petRepository.save(newPet),PetDto.class);
         return modelMapper.map(petRepository.save(newPet),PetDto.class);
     }
 

@@ -2,26 +2,39 @@ package com.ozguryazilim.veterinary.controller;
 
 
 import com.ozguryazilim.veterinary.entity.Owner;
+import com.ozguryazilim.veterinary.entity.Pet;
+import com.ozguryazilim.veterinary.model.OwnerDto;
+import com.ozguryazilim.veterinary.model.PetDto;
+import com.ozguryazilim.veterinary.service.PetService;
 import com.ozguryazilim.veterinary.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class MainController {
 
     private final UserService ownerService;
+    private final PetService petService;
     private final ModelMapper modelMapper;
 
-    public MainController(UserService ownerService, ModelMapper modelMapper) {
+    public MainController(UserService ownerService, PetService petService, ModelMapper modelMapper) {
         this.ownerService = ownerService;
+        this.petService = petService;
         this.modelMapper = modelMapper;
     }
 
     @GetMapping("/owner")
     public String getAllOwners(Model model){
-        model.addAttribute("owners",ownerService.getAllOwner());
+        Long id=2L;
+        Long ownerId=2L;
+        List<PetDto> petList = petService.getPetsByOwnerId(id);
+        OwnerDto owner = ownerService.getOwnerById(ownerId);
+        model.addAttribute("pets",petList);
+        model.addAttribute("user",owner);
         return "owner";
     }
 

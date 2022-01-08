@@ -18,14 +18,14 @@ public class Pet {
 
     private String name;
     private String description;
-    private Integer age;
+    private String age;
     private String type;
     private String genus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Owner owner;
 
-    public Pet(String name, String description, Integer age, String type, String genus, Owner owner) {
+    public Pet(String name, String description, String age, String type, String genus,Owner owner) {
         this.name = name;
         this.description = description;
         this.age = age;

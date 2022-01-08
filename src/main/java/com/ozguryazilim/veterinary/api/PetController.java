@@ -1,6 +1,7 @@
 package com.ozguryazilim.veterinary.api;
 
 
+import com.ozguryazilim.veterinary.entity.Pet;
 import com.ozguryazilim.veterinary.model.PetDto;
 import com.ozguryazilim.veterinary.model.request.PetCreateRequest;
 import com.ozguryazilim.veterinary.service.OwnerService;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("animal")
+@RequestMapping("/animal")
 public class PetController {
 
     private final PetService petService;
@@ -31,6 +32,11 @@ public class PetController {
     @GetMapping("/{id}")
     public ResponseEntity<PetDto> getPetById(@PathVariable Long id){
         return new ResponseEntity<>(petService.getPetById(id),HttpStatus.OK);
+    }
+
+    @GetMapping("/owner/{id}")
+    public ResponseEntity<List<PetDto>> getPetByOwnerId(@PathVariable Long id){
+        return new ResponseEntity<>(petService.getPetsByOwnerId(id),HttpStatus.OK);
     }
 
     @PostMapping
