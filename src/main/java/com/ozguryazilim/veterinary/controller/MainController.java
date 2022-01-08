@@ -44,7 +44,7 @@ public class MainController {
     public String saveOwnerAccount(@ModelAttribute("user") Owner owner){
         ownerService.save(owner);
         //String redirect = "redirect:/owner/register?success";
-        return "redirect:/owner?success";
+        return "redirect:/login?success";
     }
 
     @GetMapping("/owner/delete/{id}")

@@ -4,7 +4,7 @@ node {
         checkout scm
     }
     stage('Build'){
-        app = docker.build("abbas1997/veterinaryapp")
+        app = docker.build("abbas1997/veterinaryapp01")
     }
 
     stage('Build'){
@@ -19,7 +19,6 @@ node {
             app.push("latest")
         }
     }
-
 
 }
 
