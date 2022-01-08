@@ -80,4 +80,11 @@ public class MainController {
         return "redirect:/owner";
     }
 
+    @GetMapping("/admin/dashboard")
+    public String getDashboardPage(Model model){
+        model.addAttribute("owners",ownerService.getAllOwner());
+        return "dashboard";
+    }
+
+
 }
