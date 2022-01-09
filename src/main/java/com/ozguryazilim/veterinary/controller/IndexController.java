@@ -20,7 +20,7 @@ public class IndexController {
     @GetMapping("/")
     public String getIndexPage(Model model){
         model.addAttribute("owners",ownerService.getAllOwner());
-        return "owner";
+        return "index";
     }
 
 }

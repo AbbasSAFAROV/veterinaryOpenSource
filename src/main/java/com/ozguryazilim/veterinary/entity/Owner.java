@@ -29,7 +29,7 @@ public class Owner {
     private String username;
     private String password;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner")
     private List<Pet> pets;
 
     public Owner(String nameSurname, String contact, String phoneNumber, String email, String username, String password) {

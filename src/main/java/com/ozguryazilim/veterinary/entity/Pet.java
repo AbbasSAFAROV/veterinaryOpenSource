@@ -25,6 +25,8 @@ public class Pet {
     @ManyToOne(fetch = FetchType.LAZY)
     private Owner owner;
 
+
+
     public Pet(String name, String description, String age, String type, String genus,Owner owner) {
         this.name = name;
         this.description = description;

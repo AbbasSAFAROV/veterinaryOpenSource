@@ -1,16 +1,63 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <div th:replace="header::myHeader"></div>
 </head>
 <body>
-  <div th:replace="navbar::navbar"></div>
 
-  <h1>Hi From Index</h1>
-  <div>
-    <p>Welcome</p>
+<div th:replace="navbar::navbar"></div>
+
+<div style="margin-top: 30px">
+  <h1 style="text-align: center">Dashboard Page</h1>
+</div>
+
+
+<div class="container">
+  <div th:if="${param.success}">
+    <div class="alert alert-success" role="alert">
+      This is a success alert—check it out!
+    </div>
   </div>
+  <div class="row">
+    <table class="table">
+      <thead class="thead-light">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Username</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Role</th>
+        <th scope="col">Delete</th>
+        <th scope="col">Update</th>
+        <th scope="col">Activate Admin</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="owner:${owners}">
+        <td th:text="${owner.getId()}"></td>
+        <td th:text="${owner.getNameSurname()}"></td>
+        <td th:text="${owner.getEmail()}"></td>
+        <td th:text="${owner.getUsername()}"></td>
+        <td th:text="${owner.getPhoneNumber()}"></td>
+        <td th:text="${owner.getUserRole()}"></td>
+        <td>
+          <a class="btn btn-danger" th:href="@{'/owner/delete/'+${owner.getId()}}">Delete</a>
+        </td>
+        <td>
+          <a class="btn btn-warning" th:href="@{/owner/update/{id}(id=${owner.getId()})}">Update</a>
+        </td>
+        <td>
+          <a class="btn btn-primary" th:href="@{/owner/activate/admin/{id}(id=${owner.getId()})}">Activate</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div th:replace="footer::footer"></div>
+
 
 </body>
 </html>

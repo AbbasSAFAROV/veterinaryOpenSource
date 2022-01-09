@@ -17,37 +17,30 @@
                 <div>
                     <h1 style="text-align: center">Profile Details</h1>
                 </div>
-                <form th:action="@{/pet/add/{id}(id=${user.getId()})}" method="get" th:object="${user}">
+                <form th:action="@{/owner}" method="post" th:object="${user}">
                     <div class="form-group">
                         <label for="nameSurname">Name Surname</label>
-                        <input class="form-control" type="text" name="nameSurname" th:value="*{nameSurname}" id="nameSurname" placeholder="nameSurname">
+                        <input class="form-control" type="text" name="nameSurname" th:value="*{nameSurname}" id="nameSurname" placeholder="nameSurname" readonly>
                     </div>
                     <div class="form-group">
                         <label for="phoneNumber">Phone Number</label>
-                        <input class="form-control" type="tel" name="phoneNumber" th:value="*{phoneNumber}" id="phoneNumber" placeholder="phoneNumber">
+                        <input class="form-control" type="tel" name="phoneNumber" th:value="*{phoneNumber}" id="phoneNumber" placeholder="phoneNumber" readonly>
                     </div>
                     <div class="form-group">
                         <label for="contact">Contact</label>
-                        <input class="form-control" type="text" name="contact" th:value="*{contact}" id="contact" placeholder="contact">
+                        <input class="form-control" type="text" name="contact" th:value="*{contact}" id="contact" placeholder="contact" readonly>
                     </div>
                     <div class="form-group">
                         <label for="email">Email address</label>
-                        <input type="email" class="form-control" name="email" th:value="*{email}" id="email" placeholder="email">
+                        <input type="email" class="form-control" name="email" th:value="*{email}" id="email" placeholder="email" readonly>
                     </div>
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" name="username" th:value="*{username}" id="username" placeholder="username">
+                        <input type="text" class="form-control" name="username" th:value="*{username}" id="username" placeholder="username" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" name="password" th:value="*{password}" id="exampleInputPassword1" placeholder="password">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Role</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <option>Standart</option>
-                            <option>Admin</option>
-                        </select>
+                        <label for="role">Role</label>
+                        <input type="text" class="form-control" name="username" th:value="*{userRole}" id="role" placeholder="username" readonly>
                     </div>
                 </form>
 
@@ -79,6 +72,7 @@
                             <th scope="col">Description</th>
                             <th scope="col">Type</th>
                             <th scope="col">Genus</th>
+                            <th scope="col">Age</th>
                             <th scope="col">Delete</th>
                             <th scope="col">Update</th>
                         </tr>
@@ -92,10 +86,10 @@
                             <td th:text="${pet.getType()}"></td>
                             <td th:text="${pet.getAge()}"></td>
                             <td>
-                                <a class="btn btn-danger" th:href="@{'/owner/delete/'+${owner.getId()}}">Delete</a>
+                                <a class="btn btn-danger" th:href="@{'/owner/delete/'+${pet.getId()}}">Delete</a>
                             </td>
                             <td>
-                                <a class="btn btn-warning" th:href="@{/owner/update/{id}(id=${owner.getId()})}">Update</a>
+                                <a class="btn btn-warning" th:href="@{/owner/update/{id}(id=${pet.getId()})}">Update</a>
                             </td>
                         </tr>
                         </tbody>
