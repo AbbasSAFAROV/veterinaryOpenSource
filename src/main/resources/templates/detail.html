@@ -6,11 +6,38 @@
 </head>
 <body>
 <div th:replace="navbar::navbar"></div>
-
-<h1>Hi From Index</h1>
 <div>
-    <p>Welcome Detail Page</p>
-    <td th:text="${owner.getPhoneNumber()}"></td>
+    <div style="text-align: center;margin-top: 12px;" >
+        <h1>Welcome Detail Page</h1>
+    </div>
+    <div class="container">
+        <form th:action="@{/owner}" method="post" th:object="${user}">
+            <div class="form-group">
+                <label for="nameSurname">Name Surname</label>
+                <input class="form-control" type="text" name="nameSurname" th:value="*{nameSurname}" id="nameSurname" placeholder="nameSurname" readonly>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input class="form-control" type="tel" name="phoneNumber" th:value="*{phoneNumber}" id="phoneNumber" placeholder="phoneNumber" readonly>
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact</label>
+                <input class="form-control" type="text" name="contact" th:value="*{contact}" id="contact" placeholder="contact" readonly>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" name="email" th:value="*{email}" id="email" placeholder="email" readonly>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" th:value="*{username}" id="username" placeholder="username" readonly>
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <input type="text" class="form-control" name="username" th:value="*{userRole}" id="role" placeholder="username" readonly>
+            </div>
+        </form>
+    </div>
 </div>
 
 

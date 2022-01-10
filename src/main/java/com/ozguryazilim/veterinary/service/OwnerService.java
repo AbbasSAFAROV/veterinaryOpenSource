@@ -49,6 +49,9 @@ public class OwnerService implements UserService{
         return modelMapper.map(ownerRepository.save(modelMapper.map(owner,Owner.class)),OwnerDto.class);
     }
 
+    public Owner findByUsername(String name){
+        return ownerRepository.findByUsername(name);
+    }
 
     public OwnerDto updateOwnerById(Owner owner, Long id){
         Owner existingOwner = findOwnerById(id);

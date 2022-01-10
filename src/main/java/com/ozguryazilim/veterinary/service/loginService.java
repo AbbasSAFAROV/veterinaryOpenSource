@@ -17,7 +17,7 @@ public class loginService implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.createAuthorityList("USER_ROLE");
+        return AuthorityUtils.createAuthorityList(owner.getUserRole().toString());
     }
 
     @Override
@@ -27,7 +27,7 @@ public class loginService implements UserDetails {
 
     @Override
     public String getUsername() {
-        return owner.getEmail();
+        return owner.getUsername();
     }
 
     @Override

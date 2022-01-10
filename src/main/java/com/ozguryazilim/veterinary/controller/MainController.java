@@ -7,7 +7,12 @@ import com.ozguryazilim.veterinary.model.OwnerDto;
 import com.ozguryazilim.veterinary.model.PetDto;
 import com.ozguryazilim.veterinary.service.PetService;
 import com.ozguryazilim.veterinary.service.UserService;
+import com.ozguryazilim.veterinary.service.loginService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class MainController {
 
     private final UserService ownerService;
@@ -28,14 +34,24 @@ public class MainController {
     }
 
     @GetMapping("/owner")
-    public String getAllOwners(Model model){
-        Long id=2L;
-        Long ownerId=2L;
-        List<PetDto> petList = petService.getPetsByOwnerId(id);
-        OwnerDto owner = ownerService.getOwnerById(ownerId);
-        model.addAttribute("pets",petList);
-        model.addAttribute("user",owner);
-        return "owner";
+    public String ownerDetails(Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        log.info(auth.getName());
+        log.info(auth.getPrincipal().toString());
+        log.info(auth.getAuthorities().toString());
+
+        if(!(auth instanceof AnonymousAuthenticationToken)){
+            loginService name = (loginService) auth.getPrincipal();
+            Owner owner = ownerService.findByUsername(name.getUsername());
+            List<PetDto> petList = petService.getPetsByOwnerId(owner.getId());
+            OwnerDto owner1 = ownerService.getOwnerById(owner.getId());
+            model.addAttribute("pets",petList);
+            model.addAttribute("user",owner1);
+            return "owner";
+        }
+        return "redirect:/owner/login";
+
+
     }
 
     @GetMapping("/owner/login")
@@ -83,7 +99,7 @@ public class MainController {
     @GetMapping("/owner/search")
     public String searchOwner(@RequestParam("search") String search,Model model){
         Owner owner = modelMapper.map(ownerService.findByName(search),Owner.class);
-        model.addAttribute("owner",owner);
+        model.addAttribute("user",owner);
         return "detail";
     }
 

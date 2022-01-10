@@ -17,6 +17,6 @@ public interface UserService extends UserDetailsService {
     String deleteOwnerById(Long id);
     OwnerDto findByName(String name);
     Owner activateAdmin(Long id);
-
+    Owner findByUsername(String name);
     Owner updateOwner(Owner owner);
 }

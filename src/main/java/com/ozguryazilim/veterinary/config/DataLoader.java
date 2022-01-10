@@ -35,7 +35,7 @@ public class DataLoader implements CommandLineRunner {
 
         owner.setUserRole(UserRole.USER_ROLE);
         owner2.setUserRole(UserRole.USER_ROLE);
-        owner3.setUserRole(UserRole.USER_ROLE);
+        owner3.setUserRole(UserRole.ADMIN_ROLE);
 
         Pet newPet= new Pet("karabash","eğitimli","12","Kangal","sivas kangal",owner);
         Pet newPet1= new Pet("karabash1","eğitimli","12","Kangal","sivas kangal",owner2);
@@ -43,6 +43,7 @@ public class DataLoader implements CommandLineRunner {
 
         service.save(owner);
         service.save(owner2);
+        service.save(owner3);
 
         petRepository.save(newPet);
         petRepository.save(newPet1);
