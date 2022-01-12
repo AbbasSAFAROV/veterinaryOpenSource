@@ -29,7 +29,7 @@ public class Owner {
     private String username;
     private String password;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner" , cascade = CascadeType.ALL)
     private List<Pet> pets;
 
     public Owner(String nameSurname, String contact, String phoneNumber, String email, String username, String password) {
