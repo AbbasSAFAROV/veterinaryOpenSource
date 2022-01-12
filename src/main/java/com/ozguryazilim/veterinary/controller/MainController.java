@@ -79,7 +79,7 @@ public class MainController {
     @GetMapping("/owner/delete/{id}")
     public String deleteOwnerById(@PathVariable("id") Long id){
         ownerService.deleteOwnerById(id);
-        return "redirect:/owner";
+        return "redirect:/";
     }
 
     @GetMapping("/owner/update/{id}")
@@ -93,7 +93,7 @@ public class MainController {
     public String updateOwner(@PathVariable("id") Long id,@ModelAttribute("user") Owner owner){
         ownerService.updateOwnerById(owner,id);
         //ownerService.updateOwner(owner);
-        return "redirect:/owner";
+        return "redirect:/";
     }
 
     @GetMapping("/owner/search")
@@ -106,7 +106,7 @@ public class MainController {
     @GetMapping("/owner/activate/admin/{id}")
     public String getActivateAdmin(@PathVariable("id") Long id){
         ownerService.activateAdmin(id);
-        return "redirect:/owner";
+        return "redirect:/";
     }
 
     @GetMapping("/admin/dashboard")
