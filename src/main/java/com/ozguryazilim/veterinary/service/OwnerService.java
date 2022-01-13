@@ -5,10 +5,15 @@ import com.ozguryazilim.veterinary.entity.Owner;
 import com.ozguryazilim.veterinary.entity.UserRole;
 import com.ozguryazilim.veterinary.exception.OwnerNotFoundException;
 import com.ozguryazilim.veterinary.model.OwnerDto;
+import com.ozguryazilim.veterinary.model.PetDto;
 import com.ozguryazilim.veterinary.model.request.OwnerCreateRequest;
 import com.ozguryazilim.veterinary.repository.OwnerRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class OwnerService implements UserService{
 
@@ -109,6 +115,23 @@ public class OwnerService implements UserService{
         Owner owner1 = ownerRepository.findById(owner.getId()).orElseThrow(()->new OwnerNotFoundException("Owner Not Found With This Id: "+owner.getId()));
         owner1.setNameSurname(owner.getNameSurname());
         return ownerRepository.save(owner1);
+    }
+
+    @Override
+    public Owner getCurrentUser() {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        log.info(auth.getName());
+        log.info(auth.getPrincipal().toString());
+        log.info(auth.getAuthorities().toString());
+
+        if(!(auth instanceof AnonymousAuthenticationToken)){
+            loginService name = (loginService) auth.getPrincipal();
+            Owner owner = findByUsername(name.getUsername());
+            return owner;
+        }
+        return null;
     }
 
     public Owner deActivateAdmin(Long id){

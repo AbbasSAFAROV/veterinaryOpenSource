@@ -35,14 +35,11 @@ public class MainController {
 
     @GetMapping("/owner")
     public String ownerDetails(Model model){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        log.info(auth.getName());
-        log.info(auth.getPrincipal().toString());
-        log.info(auth.getAuthorities().toString());
 
-        if(!(auth instanceof AnonymousAuthenticationToken)){
-            loginService name = (loginService) auth.getPrincipal();
-            Owner owner = ownerService.findByUsername(name.getUsername());
+        Owner currentUser = ownerService.getCurrentUser();
+
+        if(currentUser!=null){
+            Owner owner = ownerService.findByUsername(currentUser.getUsername());
             List<PetDto> petList = petService.getPetsByOwnerId(owner.getId());
             OwnerDto owner1 = ownerService.getOwnerById(owner.getId());
             model.addAttribute("pets",petList);

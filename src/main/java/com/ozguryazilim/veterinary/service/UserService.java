@@ -19,4 +19,5 @@ public interface UserService extends UserDetailsService {
     Owner activateAdmin(Long id);
     Owner findByUsername(String name);
     Owner updateOwner(Owner owner);
+    Owner getCurrentUser();
 }
