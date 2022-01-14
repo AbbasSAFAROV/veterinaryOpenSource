@@ -48,7 +48,7 @@ public class PetsController {
 
     @GetMapping("/pet/update/{id}")
     public String getPetUpdatePage(@PathVariable("id") Long id, Model model){
-
+        return "updatePet";
     }
 
 
