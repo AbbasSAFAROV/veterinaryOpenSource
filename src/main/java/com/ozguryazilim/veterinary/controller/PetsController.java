@@ -8,8 +8,10 @@ import com.ozguryazilim.veterinary.service.OwnerService;
 import com.ozguryazilim.veterinary.service.PetService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -43,6 +45,12 @@ public class PetsController {
 
         return "redirect:/owner?success";
     }
+
+    @GetMapping("/pet/update/{id}")
+    public String getPetUpdatePage(@PathVariable("id") Long id, Model model){
+
+    }
+
 
 
 }
