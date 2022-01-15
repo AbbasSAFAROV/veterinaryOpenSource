@@ -51,7 +51,6 @@ public class DataLoader implements CommandLineRunner {
         petRepository.save(newPet1);
         //petRepository.save(newPet2);
 
-        
 
     }
 }
