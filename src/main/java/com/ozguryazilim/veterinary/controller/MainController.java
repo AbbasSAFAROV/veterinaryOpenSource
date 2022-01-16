@@ -2,17 +2,12 @@ package com.ozguryazilim.veterinary.controller;
 
 
 import com.ozguryazilim.veterinary.entity.Owner;
-import com.ozguryazilim.veterinary.entity.Pet;
 import com.ozguryazilim.veterinary.model.OwnerDto;
 import com.ozguryazilim.veterinary.model.PetDto;
+import com.ozguryazilim.veterinary.service.OwnerService;
 import com.ozguryazilim.veterinary.service.PetService;
-import com.ozguryazilim.veterinary.service.UserService;
-import com.ozguryazilim.veterinary.service.loginService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +18,11 @@ import java.util.List;
 @Slf4j
 public class MainController {
 
-    private final UserService ownerService;
+    private final OwnerService ownerService;
     private final PetService petService;
     private final ModelMapper modelMapper;
 
-    public MainController(UserService ownerService, PetService petService, ModelMapper modelMapper) {
+    public MainController(OwnerService ownerService, PetService petService, ModelMapper modelMapper) {
         this.ownerService = ownerService;
         this.petService = petService;
         this.modelMapper = modelMapper;
@@ -39,7 +34,7 @@ public class MainController {
         Owner currentUser = ownerService.getCurrentUser();
 
         if(currentUser!=null){
-            Owner owner = ownerService.findByUsername(currentUser.getUsername());
+            Owner owner = ownerService.getOwnerByEmail(currentUser.getEmail());
             List<PetDto> petList = petService.getPetsByOwnerId(owner.getId());
             OwnerDto owner1 = ownerService.getOwnerById(owner.getId());
             model.addAttribute("pets",petList);
@@ -106,11 +101,7 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/admin/dashboard")
-    public String getDashboardPage(Model model){
-        model.addAttribute("owners",ownerService.getAllOwner());
-        return "dashboard";
-    }
+
 
 
 }

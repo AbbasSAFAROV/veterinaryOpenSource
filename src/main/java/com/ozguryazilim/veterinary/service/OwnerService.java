@@ -2,6 +2,7 @@ package com.ozguryazilim.veterinary.service;
 
 
 import com.ozguryazilim.veterinary.entity.Owner;
+import com.ozguryazilim.veterinary.entity.Role;
 import com.ozguryazilim.veterinary.entity.UserRole;
 import com.ozguryazilim.veterinary.exception.OwnerNotFoundException;
 import com.ozguryazilim.veterinary.model.OwnerDto;
@@ -13,18 +14,24 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class OwnerService implements UserService{
+public class OwnerService implements UserDetailsService {
 
     private final OwnerRepository ownerRepository;
     private final ModelMapper modelMapper;
@@ -55,10 +62,6 @@ public class OwnerService implements UserService{
         return modelMapper.map(ownerRepository.save(modelMapper.map(owner,Owner.class)),OwnerDto.class);
     }
 
-    public Owner findByUsername(String name){
-        return ownerRepository.findByUsername(name);
-    }
-
     public OwnerDto updateOwnerById(Owner owner, Long id){
         Owner existingOwner = findOwnerById(id);
         existingOwner.setNameSurname(owner.getNameSurname());
@@ -87,37 +90,34 @@ public class OwnerService implements UserService{
         return ownerRepository.findById(id).orElseThrow(()->new OwnerNotFoundException("Owner Not Found With This Id: "+id));
     }
 
-    @Override
     public Owner save(Owner request) {
         request.setPassword(passwordEncoder.encode(request.getPassword()));
         //Owner owner = new Owner(request.getNameSurname(),request.getContact(),request.getUsername(),request.getEmail(),request.getPhoneNumber(),passwordEncoder.encode(request.getPassword()));
         return ownerRepository.save(request);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Owner owner = ownerRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Owner owner = ownerRepository.findByEmail(email);
         //Collection<UserRole> roles = Collections.singleton(owner.getUserRole());
         if (owner == null) {
             throw new UsernameNotFoundException("Invalid Username or password 01");
         }
-        return new loginService(owner);
+        //return new loginService(owner);
+        return new User(owner.getEmail(),owner.getPassword(),mapRoles(owner.getRoles()));
     }
 
     public Owner activateAdmin(Long id){
         Owner owner = findOwnerById(id);
-        owner.setUserRole(UserRole.ADMIN_ROLE);
+        owner.setRoles(Arrays.asList(new Role("ADMIN")));
         return ownerRepository.save(owner);
     }
 
-    @Override
     public Owner updateOwner(Owner owner) {
         Owner owner1 = ownerRepository.findById(owner.getId()).orElseThrow(()->new OwnerNotFoundException("Owner Not Found With This Id: "+owner.getId()));
         owner1.setNameSurname(owner.getNameSurname());
         return ownerRepository.save(owner1);
     }
 
-    @Override
     public Owner getCurrentUser() {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -127,8 +127,8 @@ public class OwnerService implements UserService{
         log.info(auth.getAuthorities().toString());
 
         if(!(auth instanceof AnonymousAuthenticationToken)){
-            loginService name = (loginService) auth.getPrincipal();
-            Owner owner = findByUsername(name.getUsername());
+            Object name = (Object) auth.getPrincipal();
+            Owner owner = ownerRepository.findByEmail(auth.getName());
             return owner;
         }
         return null;
@@ -136,13 +136,13 @@ public class OwnerService implements UserService{
 
     public Owner deActivateAdmin(Long id){
         Owner owner = findOwnerById(id);
-        owner.setUserRole(UserRole.USER_ROLE);
+        owner.setRoles(Arrays.asList(new Role("USER")));
         return ownerRepository.save(owner);
     }
 
-    /**
-    private Collection<? extends GrantedAuthority> mapRoles(Collection<UserRole> roles){
-        return roles.stream().map(role->new SimpleGrantedAuthority(role.name())).collect(Collectors.toList());
+
+    private Collection<? extends GrantedAuthority> mapRoles(Collection<Role> roles){
+        return roles.stream().map(role->new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
-     **/
+
 }

@@ -1,6 +1,6 @@
 package com.ozguryazilim.veterinary.security;
 
-import com.ozguryazilim.veterinary.service.UserService;
+import com.ozguryazilim.veterinary.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Lazy
     @Autowired
-    private UserService ownerService;
+    private OwnerService ownerService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/register","/login","/owner","/animal","/h2-console/**")
+                .antMatchers("/register","/login","/owner","/animal","/h2-console**")
                 .permitAll()
                 .and()
                 .formLogin()
