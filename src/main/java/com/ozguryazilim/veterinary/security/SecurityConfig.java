@@ -1,5 +1,6 @@
 package com.ozguryazilim.veterinary.security;
 
+import com.ozguryazilim.veterinary.service.AuthService;
 import com.ozguryazilim.veterinary.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Lazy
     @Autowired
-    private OwnerService ownerService;
+    private AuthService authService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
@@ -31,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-        auth.setUserDetailsService(ownerService);
+        auth.setUserDetailsService(authService);
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
     }
@@ -40,13 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }
-
-    /**
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(ownerService).passwordEncoder(passwordEncoder());
-    }
-    **/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

@@ -2,8 +2,8 @@ package com.ozguryazilim.veterinary.controller;
 
 
 import com.ozguryazilim.veterinary.entity.Owner;
-import com.ozguryazilim.veterinary.entity.Pet;
 import com.ozguryazilim.veterinary.model.request.PetCreateRequest;
+import com.ozguryazilim.veterinary.service.AuthService;
 import com.ozguryazilim.veterinary.service.OwnerService;
 import com.ozguryazilim.veterinary.service.PetService;
 import org.modelmapper.ModelMapper;
@@ -19,11 +19,13 @@ public class PetsController {
 
     private final PetService petService;
     private final OwnerService ownerService;
+    private final AuthService authService;
     private final ModelMapper modelMapper;
 
-    public PetsController(PetService petService, OwnerService ownerService, ModelMapper modelMapper) {
+    public PetsController(PetService petService, OwnerService ownerService, AuthService authService, ModelMapper modelMapper) {
         this.petService = petService;
         this.ownerService = ownerService;
+        this.authService = authService;
         this.modelMapper = modelMapper;
     }
 
@@ -39,7 +41,7 @@ public class PetsController {
 
     @PostMapping("/pet/add")
     public String getPetAddPage(@ModelAttribute("pet") PetCreateRequest pet){
-        Owner currentOwner = ownerService.getCurrentUser();
+        Owner currentOwner = authService.getCurrentUser();
         pet.setOwnerId(currentOwner.getId());
         petService.createPet(pet);
 

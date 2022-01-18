@@ -28,8 +28,8 @@ public class OwnerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OwnerDto> getOwnerById(@PathVariable Long id){
-        return new ResponseEntity<>(ownerService.getOwnerById(id),HttpStatus.OK);//200
+    public ResponseEntity<Owner> getOwnerById(@PathVariable Long id){
+        return new ResponseEntity<>(ownerService.findOwnerById(id),HttpStatus.OK);//200
     }
     @GetMapping("/search")
     public ResponseEntity<OwnerDto> getOwnerByName(@RequestParam String name){
@@ -37,12 +37,12 @@ public class OwnerController {
     }
 
     @PostMapping
-    public ResponseEntity<OwnerDto> createOwner(@RequestBody OwnerCreateRequest owner){
+    public ResponseEntity<Owner> createOwner(@RequestBody Owner owner){
         return new ResponseEntity<>(ownerService.createOwner(owner),HttpStatus.CREATED);//201
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OwnerDto> updateOwner(@RequestBody Owner owner, @PathVariable Long id){
+    public ResponseEntity<Owner> updateOwner(@RequestBody Owner owner, @PathVariable Long id){
         return new ResponseEntity<>(ownerService.updateOwnerById(owner,id),HttpStatus.OK); // 200
     }
 
